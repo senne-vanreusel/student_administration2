@@ -16,10 +16,31 @@
                         <a href="">{{$course->programme->name}}</a>
                     </div>
                     <div class="card-footer d-flex justify-content-between">
-                        <a href="#!" class="btn btn-info btn-sm btn-block">Manage</a>
+                        <a href="courses/{{$course->id}}" class="btn btn-info btn-sm btn-block">Manage students</a>
                     </div>
                 </div>
             </div>
         @endforeach
     </div>
 @endsection
+@section('script_after')
+    <script>
+        $(function () {
+            // Add shadow to card on hover
+            $('.card').hover(function () {
+                $(this).addClass('shadow');
+            }, function () {
+                $(this).removeClass('shadow');
+            });
+            // submit form when leaving text field 'artist'
+            $('#course').blur(function () {
+                $('#searchForm').submit();
+            });
+            // submit form when changing dropdown list 'genre_id'
+            $('#programme_id').change(function () {
+                $('#searchForm').submit();
+            });
+        })
+    </script>
+@endsection
+

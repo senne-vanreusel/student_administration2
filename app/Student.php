@@ -30,7 +30,7 @@ class Student extends Model
 {
     public function programme(){
         // a student belong so a programme
-        return $this->belongsTo("App\Programme");
+        return $this->belongsTo("App\Programme")->withDefault();
     }
 
     public function studentcourses(){

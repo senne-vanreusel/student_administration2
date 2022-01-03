@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\Programme;
+use App\StudentCourse;
 use Facades\App\Helpers\Json;
 use Illuminate\Http\Request;
 
@@ -47,6 +48,16 @@ class CourseController extends Controller
 
     public function show($id)
     {
-        return view('courses.show', ['id' => $id]);
+        $courses = Course::with('programme')
+            ->with('studentCourses.student')
+            ->findOrFail($id)
+            ->makeHidden(["created_at", "updated_at"]);
+        $studentCourses = $courses->studentCourses;
+
+        $result = compact("courses", "id", "studentCourses");
+        JSon::dump($result);
+
+
+        return view('courses.show', $result);
     }
 }
