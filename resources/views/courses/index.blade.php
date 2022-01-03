@@ -15,9 +15,12 @@
                         <p class="card-text">{{$course->description}}</p>
                         <a href="">{{$course->programme->name}}</a>
                     </div>
-                    <div class="card-footer d-flex justify-content-between">
-                        <a href="courses/{{$course->id}}" class="btn btn-info btn-sm btn-block">Manage students</a>
-                    </div>
+                    @auth
+                            <div class="card-footer d-flex justify-content-between">
+                                <a href="courses/{{$course->id}}" class="btn btn-info btn-sm btn-block">Manage students</a>
+                            </div>
+                    @endauth
+
                 </div>
             </div>
         @endforeach

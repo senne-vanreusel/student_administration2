@@ -17,5 +17,3 @@ mix.browserSync({
     proxy: 'student_administration2.test',
     port: 3000
 });
-mix.version();
-
