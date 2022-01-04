@@ -31,7 +31,8 @@ Route::get('home', 'HomeController@index')->name('home');
 Route::middleware(["auth", "admin"])->prefix("admin")->group(function () {
     Route::redirect("/", "admin/profile");
     Route::resource("programmes", "Admin\ProgrammeController");
-    Route::get("programmes/{id}/show", "Admin\ProgrammeController@show");
+    Route::get("programmes", "Admin\ProgrammeController@index");
+    Route::get('programmes/{id}/show','Admin\ProgrammeController@show');
 //   Route::get("programmes/{id}/edit", "Admin\ProgrammeController@edit");
 
 });

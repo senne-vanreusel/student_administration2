@@ -10,13 +10,13 @@
                     <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/courses">courses</a>
+                    <a class="nav-link" href="/courses">Courses</a>
                 </li>
                 {{--                Will only show for admin authenticated users. --}}
                 @auth
                     @if(auth()->user()->admin)
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin/programmes">programmes</a>
+                            <a class="nav-link" href="/admin/programmes">Programmes</a>
                         </li>
                     @endif
                 @endauth
