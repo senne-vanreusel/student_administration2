@@ -60,4 +60,19 @@ class CourseController extends Controller
 
         return view('courses.show', $result);
     }
+
+    public function store(Request $request)
+    {
+        $this->validate($request,[
+            'name'=>'required|min:3|unique:programmes,name,',
+            'description'=>'required|min:3'
+        ]);
+
+        $course= new Course();
+        $course->name = $request->name;
+        $course->description = $request->description;
+        $course->programme_id = $request->id;
+        $course->save();
+        return redirect("/admin/programmes/$request->id/show");
+    }
 }
