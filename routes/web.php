@@ -39,5 +39,8 @@ Route::middleware(["auth", "admin"])->prefix("admin")->group(function () {
     Route::get("programmes2/qryProgrammes", 'Admin\Programme2Controller@qryProgrammes');
     Route::resource('programmes2', 'Admin\Programme2Controller', ['parameters' => ['programmes2' => 'programme']]);
 
+    Route::get("users2/qryUsers", 'Admin\User2Controller@qryUsers');
+    Route::resource('users2', 'Admin\User2Controller', ['parameters' => ['users2' => 'user']]);
+
 
 });

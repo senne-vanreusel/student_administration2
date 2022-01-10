@@ -40404,7 +40404,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Noty = __webpack_require__(/*! noty */ "./node_modules/noty/lib/noty.js");
 Noty.overrideDefaults({
   theme: 'bootstrap-v4',
-  type: 'warning',
+  type: 'error',
   layout: 'center',
   modal: true
 });

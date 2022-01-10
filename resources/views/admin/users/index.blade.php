@@ -1,60 +1,52 @@
 @extends('layouts.template')
 
-@section('title','Programmes (advanced)')
+@section('title','users (advanced)')
 
 @section('main')
-    <h1>Programmes</h1>
-    <p>
-        <a href="#!" class="btn btn-outline-success" id="btn-create">
-            <i class="fas fa-plus-circle mr-1"></i>Create new Programme
-        </a>
-    </p>
+    <h1>Users</h1>
     <div class="table-responsive">
         <table class="table">
             <thead>
             <tr>
                 <th>#</th>
-                <th>Programme</th>
-                <th>Courses for this Programme</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Active</th>
+                <th>Admin</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             </tbody>
         </table>
+{{--        {{ $users->withQueryString()->links() }}--}}
     </div>
-    @include('admin.programmes2.modal')
+
+    @include('admin.users.modal')
 @endsection
 @section('script_after')
     <script>
 
         loadTable();
-        // Popup a dialog
+        // Popup a dialog and delete user
         $('tbody').on('click', '.btn-delete', function () {
             // Get data attributes from td tag
             const id = $(this).closest('td').data('id');
             const name = $(this).closest('td').data('name');
-            const courses = $(this).closest('td').data('courses');
             // Set some values for Noty
-            let text = `<p>Delete the Programme <b>${name}</b>?</p>`;
-            let type = 'warning';
-            let btnText = 'Delete Programme';
+            let text = `<p>Delete the User <b>${name}</b>?</p>`;
+            let type = 'error';
+            let btnText = 'Delete User';
             let btnClass = 'btn-success';
-            // If records not 0, overwrite values for Noty
-            if (courses > 0) {
-                text += `<p>ATTENTION: you are going to delete ${courses} courses at the same time!</p>`;
-                btnText = `Delete Programme + ${courses} courses`;
-                btnClass = 'btn-danger';
-                type = 'error';
-            }
+
             // Show Confirm Dialog
             let modal = new Noty({
                 type: type,
                 text: text,
                 buttons: [
                     Noty.button(btnText, `btn ${btnClass}`, function () {
-                        // Delete genre and close modal
-                        deleteProgramme(id);
+                        // Delete USer
+                        deleteUser(id);
                         modal.close();
                     }),
                     Noty.button('Cancel', 'btn btn-secondary ml-2', function () {
@@ -64,33 +56,32 @@
             }).show();
         });
 
-        // Show the Bootstrap modal to edit a genre
+        // Show the Bootstrap modal to edit a user
         $('tbody').on('click', '.btn-edit', function () {
             // Get data attributes from td tag
             const id = $(this).closest('td').data('id');
+            const email = $(this).closest('td').data('email');
             const name = $(this).closest('td').data('name');
+            const active = $(this).closest('td').data('active');
+            const admin = $(this).closest('td').data('admin');
+
             // Update the modal
-            $('.modal-title').text(`Edit ${name}`);
-            $('form').attr('action', `/admin/programmes2/${id}`);
+            $('.modal-title').text(`Edit user: ${name}`);
+            $('form').attr('action', `/admin/users2/${id}`);
+            active==1?$('#active').prop("checked",true):$('#active').prop("checked",false);
+            admin==1?$('#admin').prop("checked",true):$('#admin').prop("checked",false);
+
             $('#name').val(name);
+            $('#email').val(email);
             $('input[name="_method"]').val('put');
             // Show the modal
-            $('#modal-programme').modal('show');
+            $('#modal-user').modal('show');
         });
 
-        // Show the Bootstrap modal to create a new genre
-        $('#btn-create').click(function () {
-            // Update the modal
-            $('.modal-title').text(`New Programme`);
-            $('form').attr('action', `/admin/programmes2`);
-            $('#name').val('');
-            $('input[name="_method"]').val('post');
-            // Show the modal
-            $('#modal-programme').modal('show');
-        });
+
 
         // Submit the Bootstrap modal form with AJAX
-        $('#modal-programme form').submit(function (e) {
+        $('#modal-user form').submit(function (e) {
             // Don't submit the form
             e.preventDefault();
             // Get the action property (the URL to submit)
@@ -108,7 +99,7 @@
                         text: data.text
                     });
                     // Hide the modal
-                    $('#modal-programme').modal('hide');
+                    $('#modal-user').modal('hide');
                     // Rebuild the table
                     loadTable();
                 })
@@ -131,13 +122,13 @@
         });
 
         // Delete a genre
-        function deleteProgramme(id) {
+        function deleteUser(id) {
             // Delete the genre from the database
             let pars = {
                 '_token': '{{ csrf_token() }}',
                 '_method': 'delete'
             };
-            $.post(`/admin/programmes2/${id}`, pars, 'json')
+            $.post(`/admin/users2/${id}`, pars, 'json')
                 .done(function (data) {
                     console.log('data', data);
                     // Show toast
@@ -152,22 +143,39 @@
                     console.log('error', e);
                 });
         }
-        //load programmes with AJAX
-        function loadTable(){
-            $.getJSON('/admin/programmes2/qryProgrammes')
+
+        //load users with AJAX
+        function loadTable() {
+            $.getJSON('/admin/users2/qryUsers')
                 .done(function (data) {
                     console.log('data', data);
                     // Clear tbody tag
                     $('tbody').empty();
                     // Loop over each item in the array
                     $.each(data, function (key, value) {
+                        let active=""
+                        let admin=""
+                        if (value.active==1){
+                            active="<i class='fas fa-check'></i>"
+                        }else{
+                            active ="";
+                        }
+                        if (value.admin==1){
+                            admin="<i class='fas fa-check'></i>"
+                        }else{
+                            admin ="";
+                        }
                         let tr = `<tr>
                                <td>${value.id}</td>
                                <td>${value.name}</td>
-                               <td>${value.courses_count}</td>
+                               <td>${value.email}</td>
+                               <td>${active}</td>
+                               <td>${admin}</td>
                                <td data-id="${value.id}"
-                                   data-courses="${value.courses_count}"
-                                   data-name="${value.name}">
+                                   data-email="${value.email}"
+                                   data-name="${value.name}"
+                                   data-active="${value.active}"
+                                   data-admin="${value.admin}">
                                     <div class="btn-group btn-group-sm">
                                         <a href="#!" class="btn btn-outline-success btn-edit" title="edit" ta-toggle="tooltip">
 
@@ -187,7 +195,6 @@
                     console.log('error', e);
                 })
         }
-
 
 
     </script>

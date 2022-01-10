@@ -21,6 +21,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/admin/programmes2">Programmes2</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/users2">Users</a>
+                        </li>
                     @endif
                 @endauth
             </ul>

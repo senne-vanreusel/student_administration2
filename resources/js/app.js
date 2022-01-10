@@ -3,7 +3,7 @@ require('./bootstrap');
 window.Noty = require('noty');
 Noty.overrideDefaults({
     theme: 'bootstrap-v4',
-    type: 'warning',
+    type: 'error',
     layout: 'center',
     modal: true,
 });

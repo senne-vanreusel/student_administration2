@@ -45,7 +45,23 @@ class CreateUsersTable extends Migration
                 ],
                 [
                     'name' => 'Senne Van Reusel',
-                    'email' => 'vanreuselsenne@gmail.com',
+                    'email' => 'vanreuseldsenne@gmail.com',
+                    'admin' => false,
+                    'password' => Hash::make('sennevanreusel'),
+                    'created_at' => now(),
+                    'email_verified_at' => now()
+                ],
+                [
+                'name' => 'test',
+                'email' => 'vanreuselsdsenne@gmail.com',
+                'admin' => false,
+                'password' => Hash::make('sennevanreusel'),
+                'created_at' => now(),
+                'email_verified_at' => now()
+            ],
+                [
+                    'name' => 'test',
+                    'email' => 'vanreuselssdfenne@gmail.com',
                     'admin' => false,
                     'password' => Hash::make('sennevanreusel'),
                     'created_at' => now(),
