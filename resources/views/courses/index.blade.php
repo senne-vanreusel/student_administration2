@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{$course->name}}</h5>
                         <p class="card-text">{{$course->description}}</p>
-                        <a href="">{{$course->programme->name}}</a>
+                        <a href="/admin/programmes/{{$course->programme->id}}/show">{{$course->programme->name}}</a>
                     </div>
                     @auth
                             <div class="card-footer d-flex justify-content-between">

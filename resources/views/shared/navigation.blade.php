@@ -18,6 +18,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/admin/programmes">Programmes</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/programmes2">Programmes2</a>
+                        </li>
                     @endif
                 @endauth
             </ul>

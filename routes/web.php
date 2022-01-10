@@ -33,8 +33,11 @@ Route::middleware(["auth", "admin"])->prefix("admin")->group(function () {
     Route::resource("programmes", "Admin\ProgrammeController");
     Route::get("programmes", "Admin\ProgrammeController@index");
     Route::get('programmes/{id}/show','Admin\ProgrammeController@show');
-
     Route::get('programmes/{id}/add','CourseController@store');
 //   Route::get("programmes/{id}/edit", "Admin\ProgrammeController@edit");
+
+    Route::get("programmes2/qryProgrammes", 'Admin\Programme2Controller@qryProgrammes');
+    Route::resource('programmes2', 'Admin\Programme2Controller', ['parameters' => ['programmes2' => 'programme']]);
+
 
 });

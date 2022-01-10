@@ -11,9 +11,16 @@
 @include('shared.navigation')
 <main class="container mt-3 ">
     @yield('main','page under construction')
-</main>
+</main>"
 {{--  Footer  --}}
 @include('shared.footer')
-<script src="{{mix('js/app.js')}}"></script>
+<script src="{{ mix('js/app.js') }}"></script>
+@yield('script_after')
+{{--if debug is true in the .env file, always add novalidate to forms--}}
+@if( env("APP/DEBUG"))
+    <script>
+        $("form").attr("novalidate", "true");
+    </script>
+@endif
 </body>
 </html>

@@ -15,7 +15,7 @@
     @foreach($programmes->courses as $course)
         <li>{{$course->name}}</li>
     @endforeach
-
+    <br>
     <h2>Add a new course to IT Factory</h2>
     <form action="/admin/programmes/{{$programmes->id}}/add" method="get">
         @csrf
