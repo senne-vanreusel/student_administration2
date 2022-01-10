@@ -14,9 +14,19 @@ class User2Controller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(1);
+        $filterSelect = $request->filterSelect;
+        $filter = '%' . $request->filter .'%';
+
+        $filterS =($filterSelect===null || $filterSelect ==="m1" || $filterSelect==="m2") ?'name':null;
+        $filterS =($filterSelect==="m3" || $filterSelect ==="m4" ) ?'email':$filterS;
+        $filterS =($filterSelect==="m5" ) ?'active':$filterS;
+        $filterS =($filterSelect==="m6" ) ?'admin':$filterS;
+        $order =($filterSelect==="m2" || $filterSelect==="m6" ) ?'desc':'asc';
+        $order =($filterSelect==="m4"  ) ?'desc':$order;
+
+        $users = User::where([['name','like',$filter],['email','like',$filter]])->orderBy($filterS,$order)->paginate(10);
         $result = compact('users');
         Json::dump($result);
         return view('admin.users.index', $result);
